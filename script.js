@@ -1,4 +1,7 @@
-    AOS.init();
+    AOS.init({
+        duration:1000,
+        delay:5,
+    });
     let counter=0;
     var $tableCartMenu = $(".cart-products");
     $(".cart-icon").append($("sup").html(counter));
@@ -11,6 +14,7 @@
         
     })
 
+    //adds the number of products in cart
 function updateCartNumber(){
 
     counter++;
@@ -18,6 +22,7 @@ function updateCartNumber(){
     $(".cart-icon").append($("sup").html(counter));
     }
 
+    //removes products from cart
 function removeCartNumber() {
 
     counter-=1;
@@ -142,7 +147,7 @@ function addNewProductToCart(image,productTitle,productPrice){
 }
 
 
-//adding a link and working with it
+//adding a link to go to next page and working with it
 var divContent = document.querySelectorAll(".product-contents");
  divContent.forEach(event=>event.addEventListener("mouseover",displayLink));
  
@@ -157,22 +162,33 @@ function displayLink(){
     }
 
     newEl.setAttribute("href","productdetails.html");
+    
     newEl.innerText = "View Details";
     newEl.classList.add("view-product-details");
+    
     viewDetails.appendChild(newEl);
-
-     //newEl.forEach(event=>event.addEventListener("click",getProductDetails));
+    
      newEl.addEventListener("click",pageProductDetails);
      
 
 }
 
+//removing the link on mouseout
 divContent.forEach(event => event.addEventListener("mouseout", ()=>{
-    var cc = document.querySelectorAll(".view-product-details")[0].classList.style("visibility","hidden");
+     event.querySelectorAll(".view-product-details")[0].classList.add("close");
     //cc.remove();
     
 }));
 
+//adding back the link on mouseover
+divContent.forEach(event => event.addEventListener("mouseover", () => {
+    event.querySelectorAll(".view-product-details")[0].classList.remove("close");
+    //cc.remove();
+
+}));
+
+
+//getting product details to add to productdetails.html
 function pageProductDetails(){
 
     var clickedLink= this;
@@ -185,12 +201,13 @@ function pageProductDetails(){
     
     addProductsToDetails(pdImage, pdTitle, pdPrice);
 }
-//product-details-row
+
+//adding the selected elements to the new page
 function addProductsToDetails(pdImage, pdTitle, pdPrice){
     var newParentDiv = document.createElement("div");
+   
     newParentDiv.classList.add("product-details-column");
-    var existingDetailsParent = document.querySelector(".product-details-row");
-    //existingDetailsParent.innerHTML = "Lorem ipsum dolor sit amet consectetur";
+    
     
     var existingDetailBody = `
 
@@ -214,7 +231,7 @@ function addProductsToDetails(pdImage, pdTitle, pdPrice){
     
     newParentDiv.innerHTML = existingDetailBody;
     
-    existingDetailsParent.append(newParentDiv);
-    
+    localStorage.setItem("item",newParentDiv.innerHTML);
+   
 }
 
