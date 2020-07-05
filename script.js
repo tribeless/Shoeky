@@ -2,6 +2,7 @@
         duration:1000,
         delay:5,
     });
+    
     let counter=0;
     var $tableCartMenu = $(".cart-products");
     $(".cart-icon").append($("sup").html(counter));
@@ -232,6 +233,7 @@ function addProductsToDetails(pdImage, pdTitle, pdPrice){
     newParentDiv.innerHTML = existingDetailBody;
     
     localStorage.setItem("item",newParentDiv.innerHTML);
+
    
 }
 
